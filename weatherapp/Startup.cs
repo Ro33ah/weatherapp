@@ -21,8 +21,9 @@ namespace weatherapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<IGetWeather, GetWeather>();
+
             services.AddSingleton<IWeatherService, WeatherService>();
-            services.AddSingleton<IGetWeather, GetWeather>();
 
             services.AddCors(options =>
             {

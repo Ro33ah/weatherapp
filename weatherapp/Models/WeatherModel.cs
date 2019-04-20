@@ -5,22 +5,22 @@ namespace weatherapp.Models
 {
     public class WeatherModel
     {
-        public IEnumerable<List> List { get; set; }
+        public IEnumerable<Reading> List { get; set; }
         public City city { get; set; }
 
     }
-    public class List
+    public class Reading
     {
         public Main Main { get; set; }
         public long Dt { get; set; }
-        public DateTime NewDate
+        public DateTime newDate
         {
             get
             {
                 //Dt /= 1000;
-                DateTime NewDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                NewDate = NewDate.AddSeconds(Dt);
-                return NewDate;
+                DateTime newDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                newDate = newDate.AddSeconds(Dt);
+                return newDate;
                 // return NewDate.Date.ToString("d");
             }
         }
