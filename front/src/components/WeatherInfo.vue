@@ -1,32 +1,38 @@
 <template>
-  <div class="homeText">
-    <br>
+  <p class="homeText">
       <b-form-input list="test" @change="getWeather($event)"></b-form-input>
         <datalist id="test" >
           <option v-for="test in testprop" :key="test.text" > {{ test.text }}
           </option>
         </datalist>
-    <br>
-    <canvas id="forecastChart" style="display: block" v-show="isCanvasNull">
-    </canvas>
-  </div>
+      <br>
+      <canvas id="forecastChart" v-show="isCanvasNull"></canvas>
+  </p>
 </template>
 
 <script>
+import Chart from "chart.js";
+import {Line} from "vue-chartjs";
 import {APIService} from '../APIService';
 //const API_URL = 'https://localhost:5001';
 const apiService = new APIService();
-import Chart from "chart.js";
-import {Line} from "vue-chartjs";
 
 export default {
   name: 'Home',
   props: ['testprop'],
+  data(){
+    return{
+     isCanvasNull: null,
+
+    }
+  },
+
   // {
   //   value: String,
   //   text: String,
   //   msg: String,
   // },
+
 
   methods:{
     getWeather(event){
@@ -43,6 +49,7 @@ export default {
         console.log(this.dates);
         console.log(this.temps);
         console.log(this.humidities);
+
         var ctx = document.getElementById("forecastChart").getContext('2d');
         this.chart = new Chart(ctx, {
         type: "line",
@@ -89,13 +96,15 @@ export default {
           }
         }
       })
+      this.isCanvasNull = this.canvas === null? false : true;
       });
     
     } 
     },
     mounted() {
-// this.getWeather();
-this.isCanvasNull = this.canvas === null? false : true;
+this.getWeather();
+console.log(this.canvas)
+
 }
 };
 </script>
@@ -121,7 +130,6 @@ this.isCanvasNull = this.canvas === null? false : true;
   display: inline-block;
 }
 #forecastChart{
-  display: block;
   background: #212733;
   border-radius: 15px;
   /* box-shadow: 0px 2px 15px rgba(25, 25, 25, 0.27); */

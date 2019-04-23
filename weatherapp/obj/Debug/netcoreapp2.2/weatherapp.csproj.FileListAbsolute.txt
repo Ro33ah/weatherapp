@@ -26,3 +26,17 @@ C:\Users\User\Documents\Bauhaus\self_dev\weatherapp\weatherapp\obj\Debug\netcore
 C:\Users\User\Documents\Bauhaus\self_dev\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.RazorTargetAssemblyInfo.cache
 C:\Users\User\Documents\Bauhaus\self_dev\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.dll
 C:\Users\User\Documents\Bauhaus\self_dev\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.pdb
+C:\Users\rosemary\Documents\weatherapp\weatherapp\bin\Debug\netcoreapp2.2\weatherapp.deps.json
+C:\Users\rosemary\Documents\weatherapp\weatherapp\bin\Debug\netcoreapp2.2\weatherapp.runtimeconfig.json
+C:\Users\rosemary\Documents\weatherapp\weatherapp\bin\Debug\netcoreapp2.2\weatherapp.runtimeconfig.dev.json
+C:\Users\rosemary\Documents\weatherapp\weatherapp\bin\Debug\netcoreapp2.2\weatherapp.dll
+C:\Users\rosemary\Documents\weatherapp\weatherapp\bin\Debug\netcoreapp2.2\weatherapp.pdb
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.csprojAssemblyReference.cache
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.csproj.CoreCompileInputs.cache
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.RazorAssemblyInfo.cache
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.RazorAssemblyInfo.cs
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.AssemblyInfoInputs.cache
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.AssemblyInfo.cs
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.RazorTargetAssemblyInfo.cache
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.dll
+C:\Users\rosemary\Documents\weatherapp\weatherapp\obj\Debug\netcoreapp2.2\weatherapp.pdb

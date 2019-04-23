@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace weatherapp.Models
 {
@@ -11,6 +12,7 @@ namespace weatherapp.Models
     }
     public class Reading
     {
+        [JsonProperty("main")]
         public Main Main { get; set; }
         public long Dt { get; set; }
         public DateTime newDate
@@ -27,8 +29,8 @@ namespace weatherapp.Models
     }
     public class Main
     {
-        public float Temp { get; set; }
-        public int Humidity { get; set; }
+        public float temp { get; set; }
+        public int humidity { get; set; }
 
     }
     public class City

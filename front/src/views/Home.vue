@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <WeatherInfo v-bind:testprop="options"/>
   </div>
 </template>
