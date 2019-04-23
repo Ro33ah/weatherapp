@@ -1,10 +1,6 @@
 <template>
   <p class="homeText">
-      <b-form-input list="test" @change="getWeather($event)"></b-form-input>
-        <datalist id="test" >
-          <option v-for="test in testprop" :key="test.text" > {{ test.text }}
-          </option>
-        </datalist>
+      <b-form-input v-model="input" placeholder="Enter city name" @change="getWeather($event)"></b-form-input>
       <br>
       <canvas id="forecastChart" v-show="isCanvasNull"></canvas>
   </p>
@@ -19,9 +15,10 @@ const apiService = new APIService();
 
 export default {
   name: 'Home',
-  props: ['testprop'],
+  props: ['value'],
   data(){
     return{
+      input: '',
      isCanvasNull: null,
 
     }
@@ -36,7 +33,7 @@ export default {
 
   methods:{
     getWeather(event){
-      apiService.getWeather(this.testprop.filter(x => x.text === event)[0].value).then((data)=> {
+      apiService.getWeather(event).then((data)=> {
         this.dates = data.list.map(list => {
           return list.newDate;
         });
@@ -46,10 +43,6 @@ export default {
         this.humidities = data.list.map( list => {
           return list.main.humidity;
         });
-        console.log(this.dates);
-        console.log(this.temps);
-        console.log(this.humidities);
-
         var ctx = document.getElementById("forecastChart").getContext('2d');
         this.chart = new Chart(ctx, {
         type: "line",
@@ -102,10 +95,9 @@ export default {
     } 
     },
     mounted() {
-this.getWeather();
-console.log(this.canvas)
-
-}
+      //this.isCanvasNull = this.canvas === null? false : true;
+      //this.getWeather();
+    }
 };
 </script>
 

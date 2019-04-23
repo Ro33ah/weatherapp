@@ -5,7 +5,7 @@ using weatherapp.Services;
 namespace weatherapp.Controllers
 {
 
-    [Route("data/2.5/random/{cityId}")]
+    [Route("data/2.5/forecast/{cityId}")]
     [ApiController]
     public class ForecastController : ControllerBase
     {
@@ -16,10 +16,8 @@ namespace weatherapp.Controllers
             _weatherService = weatherService;
         }
 
-        // GET api/values
         [HttpGet]
-        //[Route("data/2.5/random/{cityId}")]
-        public async Task<IActionResult> GetWeather(int cityId)
+        public async Task<IActionResult> GetWeather(string cityId)
         {
             var result = await _weatherService.GetWeatherForecast(cityId);
             return Ok(result);

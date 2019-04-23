@@ -16,7 +16,7 @@ namespace weatherapp.Services
             _getWeather = getWeather;
         }
 
-        public async Task<WeatherModel> GetWeatherForecast(int cityId)
+        public async Task<WeatherModel> GetWeatherForecast(string cityId)
         {
             return await _getWeather.ReturnWeatherForecast(cityId);
         }
@@ -25,12 +25,12 @@ namespace weatherapp.Services
 
     public interface IWeatherService
     {
-        Task<WeatherModel> GetWeatherForecast(int cityId);
+        Task<WeatherModel> GetWeatherForecast(string cityId);
     }
 
     public interface IGetWeather
     {
-        Task<WeatherModel> ReturnWeatherForecast(int cityId);
+        Task<WeatherModel> ReturnWeatherForecast(string cityId);
     }
     
     public class GetWeather : IGetWeather
@@ -42,12 +42,12 @@ namespace weatherapp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<WeatherModel> ReturnWeatherForecast(int cityId)
+        public async Task<WeatherModel> ReturnWeatherForecast(string cityId)
         {
             Console.WriteLine(_httpClient);
             const string appid = "fcadd28326c90c3262054e0e6ca599cd";
 
-            var url = new Uri($"http://api.openweathermap.org/data/2.5/forecast?id={cityId}&appid={appid}&units=imperial");
+            var url = new Uri($"http://api.openweathermap.org/data/2.5/forecast?q={cityId},de&appid={appid}&units=imperial");
             var response = await _httpClient.GetAsync(url);
             string json;
             using (var content = response.Content)
