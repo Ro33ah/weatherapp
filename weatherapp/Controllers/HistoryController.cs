@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using weatherapp.Models;
-using weatherapp.Models.DataManager;
-using weatherapp.Models.Repository;
+using weatherapp.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

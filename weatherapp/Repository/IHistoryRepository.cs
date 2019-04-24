@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using weatherapp.Models.Repository;
 
-namespace weatherapp.Models.DataManager
+
+namespace weatherapp.Models.Repository
 {
+    interface IHistoryRepository<TEntity>
+    {
+        IEnumerable<TEntity> GetHistoryAll();
+        void Add(TEntity entity);
+
+    }
+
     public class HistoryManager : IHistoryRepository<WeatherModel>
     {
         ApplicationContext context;
@@ -14,7 +20,7 @@ namespace weatherapp.Models.DataManager
         public IEnumerable<WeatherModel> GetHistoryAll()
         {
             return context.WeatherModels.ToList();
-           
+
         }
         public void Add(WeatherModel entity)
         {

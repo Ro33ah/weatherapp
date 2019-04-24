@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using weatherapp.Services;
 using weatherapp.Models;
 using Microsoft.EntityFrameworkCore;
+using weatherapp.Repository;
 
 namespace weatherapp
 {
@@ -24,8 +25,8 @@ namespace weatherapp
         {
 
             services.AddHttpClient<IGetWeather, GetWeather>();
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:HistoryDB"]));
-
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:HistoryDB"]));
+            services.AddSingleton<IHistoryRepository<WeatherModel>, HistoryManager>();
             services.AddSingleton<IWeatherService, WeatherService>();
 
             services.AddCors(options =>
