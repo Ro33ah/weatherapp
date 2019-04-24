@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rosemary\\Documents\\weatherapp\\weatherapp\\weatherapp.csproj": {}
+    "C:\\Users\\User\\Documents\\Bauhaus\\self_dev\\weatherapp\\weatherapp\\weatherapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rosemary\\Documents\\weatherapp\\weatherapp\\weatherapp.csproj": {
+    "C:\\Users\\User\\Documents\\Bauhaus\\self_dev\\weatherapp\\weatherapp\\weatherapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rosemary\\Documents\\weatherapp\\weatherapp\\weatherapp.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\Bauhaus\\self_dev\\weatherapp\\weatherapp\\weatherapp.csproj",
         "projectName": "weatherapp",
-        "projectPath": "C:\\Users\\rosemary\\Documents\\weatherapp\\weatherapp\\weatherapp.csproj",
-        "packagesPath": "C:\\Users\\rosemary\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rosemary\\Documents\\weatherapp\\weatherapp\\obj\\",
+        "projectPath": "C:\\Users\\User\\Documents\\Bauhaus\\self_dev\\weatherapp\\weatherapp\\weatherapp.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Documents\\Bauhaus\\self_dev\\weatherapp\\weatherapp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\rosemary\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.3, )"
             }
           },
           "imports": [

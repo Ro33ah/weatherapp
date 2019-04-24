@@ -4,11 +4,25 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>ccf6fde4-0db7-441d-8a51-280eea63425c</UserSecretsId>
+    <StartupObject></StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\HistoryManager\**" />
+    <Content Remove="Models\HistoryManager\**" />
+    <EmbeddedResource Remove="Models\HistoryManager\**" />
+    <None Remove="Models\HistoryManager\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190423190717_weatherapp.Models.InputHistoryContext.cs" />
+    <Compile Remove="Migrations\20190423190717_weatherapp.Models.InputHistoryContext.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
 </Project>

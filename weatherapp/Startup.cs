@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-
 using weatherapp.Services;
 using weatherapp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace weatherapp
 {
@@ -23,9 +22,9 @@ namespace weatherapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<InputHistoryContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:InputHistoryDB"]));
 
             services.AddHttpClient<IGetWeather, GetWeather>();
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:HistoryDB"]));
 
             services.AddSingleton<IWeatherService, WeatherService>();
 
@@ -56,6 +55,8 @@ namespace weatherapp
 
             app.UseCors(builder =>
             builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
+            app.UseCors(builder =>
+            builder.WithOrigins("http://192.168.0.102:8080").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

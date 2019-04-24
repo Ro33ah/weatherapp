@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using weatherapp.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace weatherapp.Services
 {
@@ -44,7 +45,6 @@ namespace weatherapp.Services
 
         public async Task<WeatherModel> ReturnWeatherForecast(string cityId)
         {
-            Console.WriteLine(_httpClient);
             const string appid = "fcadd28326c90c3262054e0e6ca599cd";
 
             var url = new Uri($"http://api.openweathermap.org/data/2.5/forecast?q={cityId},de&appid={appid}&units=imperial");
