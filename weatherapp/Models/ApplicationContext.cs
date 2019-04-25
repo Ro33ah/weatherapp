@@ -9,9 +9,6 @@ namespace weatherapp.Models
         {
 
         }
-        public DbSet<WeatherModel> WeatherModels { get; set; }
-        public DbSet<Reading> Readings { get; set; }
-        public DbSet<Main> Mains { get; set; }
         public DbSet<City> Cities { get; set; }
     }
 }
