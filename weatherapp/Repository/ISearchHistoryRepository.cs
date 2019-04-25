@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using weatherapp.Models;
 
-
-namespace weatherapp.Models.Repository
+namespace weatherapp.Repository
 {
-    interface IHistoryRepository<TEntity>
+    public interface ISearchHistoryRepository<TEntity>
     {
-        IEnumerable<TEntity> GetHistoryAll();
+        IEnumerable<TEntity> GetSearchHistoryAll();
         void Add(TEntity entity);
 
     }
 
-    public class HistoryManager : IHistoryRepository<WeatherModel>
+    public class SearchHistoryManager : ISearchHistoryRepository<WeatherModel>
     {
         ApplicationContext context;
-        public HistoryManager(ApplicationContext _context)
+        public SearchHistoryManager(ApplicationContext _context)
         {
             context = _context;
         }
-        public IEnumerable<WeatherModel> GetHistoryAll()
+        public IEnumerable<WeatherModel> GetSearchHistoryAll()
         {
             return context.WeatherModels.ToList();
 

@@ -11,45 +11,45 @@ namespace weatherapp.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    cityId = table.Column<int>(nullable: false)
+                    CityId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cities", x => x.cityId);
+                    table.PrimaryKey("PK_Cities", x => x.CityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Mains",
                 columns: table => new
                 {
-                    mainId = table.Column<int>(nullable: false)
+                    MainId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    temp = table.Column<float>(nullable: false),
-                    humidity = table.Column<int>(nullable: false)
+                    Temp = table.Column<float>(nullable: false),
+                    Humidity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mains", x => x.mainId);
+                    table.PrimaryKey("PK_Mains", x => x.MainId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "WeatherModels",
                 columns: table => new
                 {
-                    weatherModelId = table.Column<int>(nullable: false)
+                    WeatherModelId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    cityId = table.Column<int>(nullable: true)
+                    CityId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WeatherModels", x => x.weatherModelId);
+                    table.PrimaryKey("PK_WeatherModels", x => x.WeatherModelId);
                     table.ForeignKey(
-                        name: "FK_WeatherModels_Cities_cityId",
-                        column: x => x.cityId,
+                        name: "FK_WeatherModels_Cities_CityId",
+                        column: x => x.CityId,
                         principalTable: "Cities",
-                        principalColumn: "cityId",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -57,43 +57,43 @@ namespace weatherapp.Migrations
                 name: "Readings",
                 columns: table => new
                 {
-                    readingId = table.Column<int>(nullable: false)
+                    ReadingId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    mainId = table.Column<int>(nullable: true),
-                    dt = table.Column<long>(nullable: false),
-                    weatherModelId = table.Column<int>(nullable: true)
+                    MainId = table.Column<int>(nullable: true),
+                    Dt = table.Column<long>(nullable: false),
+                    WeatherModelId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Readings", x => x.readingId);
+                    table.PrimaryKey("PK_Readings", x => x.ReadingId);
                     table.ForeignKey(
-                        name: "FK_Readings_Mains_mainId",
-                        column: x => x.mainId,
+                        name: "FK_Readings_Mains_MainId",
+                        column: x => x.MainId,
                         principalTable: "Mains",
-                        principalColumn: "mainId",
+                        principalColumn: "MainId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Readings_WeatherModels_weatherModelId",
-                        column: x => x.weatherModelId,
+                        name: "FK_Readings_WeatherModels_WeatherModelId",
+                        column: x => x.WeatherModelId,
                         principalTable: "WeatherModels",
-                        principalColumn: "weatherModelId",
+                        principalColumn: "WeatherModelId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Readings_mainId",
+                name: "IX_Readings_MainId",
                 table: "Readings",
-                column: "mainId");
+                column: "MainId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Readings_weatherModelId",
+                name: "IX_Readings_WeatherModelId",
                 table: "Readings",
-                column: "weatherModelId");
+                column: "WeatherModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeatherModels_cityId",
+                name: "IX_WeatherModels_CityId",
                 table: "WeatherModels",
-                column: "cityId");
+                column: "CityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

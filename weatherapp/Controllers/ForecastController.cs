@@ -2,25 +2,31 @@
 using Microsoft.AspNetCore.Mvc;
 using weatherapp.Services;
 using weatherapp.Models;
+using weatherapp.Repository;
 
 namespace weatherapp.Controllers
 {
 
-    [Route("data/2.5/forecast/{cityId}")]
+    [Route("api/forecast/{cityName}")]
     [ApiController]
     public class ForecastController : ControllerBase
     {
         private readonly IWeatherService _weatherService;
 
-        public ForecastController(IWeatherService weatherService)
+        private readonly ISearchHistoryRepository<WeatherModel> _searchHistoryRepository;
+
+        public ForecastController(IWeatherService weatherService, ISearchHistoryRepository<WeatherModel> searchHistoryRepository)
         {
             _weatherService = weatherService;
+            _searchHistoryRepository = searchHistoryRepository;
+      
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeather(string cityId)
+        public async Task<IActionResult> GetWeather(string cityName)
         {
-            WeatherModel result = await _weatherService.GetWeatherForecast(cityId);
+            WeatherModel result = await _weatherService.GetWeatherForecast(cityName);
+            _searchHistoryRepository.Add(result);
             return Ok(result);
         }
 

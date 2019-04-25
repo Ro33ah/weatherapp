@@ -10,27 +10,28 @@ namespace weatherapp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int weatherModelId { get; set; }
-        public IEnumerable<Reading> List { get; set; }
-        public City city { get; set; }
+        public int WeatherModelId { get; set; }
+        [JsonProperty("list")]
+        public IEnumerable<Reading> Readings { get; set; }
+        public City City { get; set; }
 
     }
     public class Reading
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int readingId { get; set; }
+        public int ReadingId { get; set; }
 
         [JsonProperty("main")]
-        public Main main { get; set; }
-        public long dt { get; set; }
-        public DateTime newDate
+        public Main Main { get; set; }
+        public long Dt { get; set; }
+        public DateTime NewDate
         {
             get
             {
                 //Dt /= 1000;
                 DateTime newDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                newDate = newDate.AddSeconds(dt);
+                newDate = newDate.AddSeconds(Dt);
                 return newDate;
                 // return NewDate.Date.ToString("d");
             }
@@ -40,17 +41,17 @@ namespace weatherapp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int mainId { get; set; }
+        public int MainId { get; set; }
 
-        public float temp { get; set; }
-        public int humidity { get; set; }
+        public float Temp { get; set; }
+        public int Humidity { get; set; }
 
     }
     public class City
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int cityId { get; set; }
-        public string name { get; set; }
+        public int CityId { get; set; }
+        public string Name { get; set; }
     }
 }

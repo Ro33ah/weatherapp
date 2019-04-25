@@ -4,7 +4,7 @@ const API_URL = "https://localhost:5001";
 
 export class APIService {
   getWeather(event) {
-    const url = `${API_URL}/data/2.5/forecast/${event}/`;
+    const url = `${API_URL}/api/forecast/${event}/`;
     return axios.get(url).then(response => response.data);
   }
 }

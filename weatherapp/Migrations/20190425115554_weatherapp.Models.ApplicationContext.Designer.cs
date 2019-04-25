@@ -10,7 +10,7 @@ using weatherapp.Models;
 namespace weatherapp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190424181557_weatherapp.Models.ApplicationContext")]
+    [Migration("20190425115554_weatherapp.Models.ApplicationContext")]
     partial class weatherappModelsApplicationContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,84 +23,84 @@ namespace weatherapp.Migrations
 
             modelBuilder.Entity("weatherapp.Models.City", b =>
                 {
-                    b.Property<int>("cityId")
+                    b.Property<int>("CityId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("name");
+                    b.Property<string>("Name");
 
-                    b.HasKey("cityId");
+                    b.HasKey("CityId");
 
                     b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("weatherapp.Models.Main", b =>
                 {
-                    b.Property<int>("mainId")
+                    b.Property<int>("MainId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("humidity");
+                    b.Property<int>("Humidity");
 
-                    b.Property<float>("temp");
+                    b.Property<float>("Temp");
 
-                    b.HasKey("mainId");
+                    b.HasKey("MainId");
 
                     b.ToTable("Mains");
                 });
 
             modelBuilder.Entity("weatherapp.Models.Reading", b =>
                 {
-                    b.Property<int>("readingId")
+                    b.Property<int>("ReadingId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("dt");
+                    b.Property<long>("Dt");
 
-                    b.Property<int?>("mainId");
+                    b.Property<int?>("MainId");
 
-                    b.Property<int?>("weatherModelId");
+                    b.Property<int?>("WeatherModelId");
 
-                    b.HasKey("readingId");
+                    b.HasKey("ReadingId");
 
-                    b.HasIndex("mainId");
+                    b.HasIndex("MainId");
 
-                    b.HasIndex("weatherModelId");
+                    b.HasIndex("WeatherModelId");
 
                     b.ToTable("Readings");
                 });
 
             modelBuilder.Entity("weatherapp.Models.WeatherModel", b =>
                 {
-                    b.Property<int>("weatherModelId")
+                    b.Property<int>("WeatherModelId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("cityId");
+                    b.Property<int?>("CityId");
 
-                    b.HasKey("weatherModelId");
+                    b.HasKey("WeatherModelId");
 
-                    b.HasIndex("cityId");
+                    b.HasIndex("CityId");
 
                     b.ToTable("WeatherModels");
                 });
 
             modelBuilder.Entity("weatherapp.Models.Reading", b =>
                 {
-                    b.HasOne("weatherapp.Models.Main", "main")
+                    b.HasOne("weatherapp.Models.Main", "Main")
                         .WithMany()
-                        .HasForeignKey("mainId");
+                        .HasForeignKey("MainId");
 
                     b.HasOne("weatherapp.Models.WeatherModel")
-                        .WithMany("List")
-                        .HasForeignKey("weatherModelId");
+                        .WithMany("Readings")
+                        .HasForeignKey("WeatherModelId");
                 });
 
             modelBuilder.Entity("weatherapp.Models.WeatherModel", b =>
                 {
-                    b.HasOne("weatherapp.Models.City", "city")
+                    b.HasOne("weatherapp.Models.City", "City")
                         .WithMany()
-                        .HasForeignKey("cityId");
+                        .HasForeignKey("CityId");
                 });
 #pragma warning restore 612, 618
         }

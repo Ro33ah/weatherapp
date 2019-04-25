@@ -1,6 +1,6 @@
 <template>
   <p class="homeText">
-      <b-form-input v-model="input" placeholder="Enter city name" @change="getWeather($event)"></b-form-input>
+      <b-form-input id="inputBar" v-model="input" placeholder="Enter city name" @change="getWeather($event)"></b-form-input>
       <br>
       <canvas id="forecastChart" v-show="isCanvasNull"></canvas>
   </p>
@@ -33,6 +33,9 @@ export default {
 
   methods:{
     getWeather(event){
+      if (document.getElementById("inputBar") == null){
+        this.isCanvasNull = null;
+      };
       apiService.getWeather(event).then((data)=> {
         this.dates = data.list.map(list => {
           return list.newDate;
