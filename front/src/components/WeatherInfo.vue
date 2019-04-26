@@ -24,18 +24,12 @@ export default {
     }
   },
 
-  // {
-  //   value: String,
-  //   text: String,
-  //   msg: String,
-  // },
-
 
   methods:{
     getWeather(event){
-      if (document.getElementById("inputBar") == null){
-        this.isCanvasNull = null;
-      };
+      // if (document.getElementById("inputBar") == null){
+      //   this.isCanvasNull = null;
+      // };
       apiService.getWeather(event).then((data)=> {
         this.dates = data.list.map(list => {
           return list.newDate;

@@ -25,8 +25,8 @@ namespace weatherapp
         {
 
             services.AddHttpClient<IGetWeather, GetWeather>();
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:HistoryDB"]));
-            services.AddTransient<ISearchHistoryRepository<WeatherModel>, SearchHistoryManager>();
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:SearchHistoryDB"]));
+            services.AddTransient<ISearchHistoryRepository<SearchHistoryModel>, SearchHistoryManager>();
             services.AddSingleton<IWeatherService, WeatherService>();
 
             services.AddCors(options =>

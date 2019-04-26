@@ -13,7 +13,7 @@ namespace weatherapp.Models
         public int WeatherModelId { get; set; }
         [JsonProperty("list")]
         public IEnumerable<Reading> Readings { get; set; }
-        public City City { get; set; }
+        public City Cities { get; set; }
 
     }
     public class Reading
@@ -52,6 +52,6 @@ namespace weatherapp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CityId { get; set; }
-        public string Name { get; set; }
+        public string CityName { get; set; }
     }
 }

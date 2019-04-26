@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using weatherapp.Services;
 using weatherapp.Models;
 using weatherapp.Repository;
+using System.Linq;
 
 namespace weatherapp.Controllers
 {
@@ -13,9 +14,9 @@ namespace weatherapp.Controllers
     {
         private readonly IWeatherService _weatherService;
 
-        private readonly ISearchHistoryRepository<WeatherModel> _searchHistoryRepository;
+        private readonly ISearchHistoryRepository<SearchHistoryModel> _searchHistoryRepository;
 
-        public ForecastController(IWeatherService weatherService, ISearchHistoryRepository<WeatherModel> searchHistoryRepository)
+        public ForecastController(IWeatherService weatherService, ISearchHistoryRepository<SearchHistoryModel> searchHistoryRepository)
         {
             _weatherService = weatherService;
             _searchHistoryRepository = searchHistoryRepository;
@@ -26,7 +27,8 @@ namespace weatherapp.Controllers
         public async Task<IActionResult> GetWeather(string cityName)
         {
             WeatherModel result = await _weatherService.GetWeatherForecast(cityName);
-            _searchHistoryRepository.Add(result);
+            SearchHistoryModel dataToStore = (result.Cities);
+            _searchHistoryRepository.Add(dataToStore);
             return Ok(result);
         }
 

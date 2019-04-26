@@ -4,6 +4,8 @@ using weatherapp.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using weatherapp.Repository;
+using System.Collections.Generic;
+
 namespace weatherapp.Services
 {
 

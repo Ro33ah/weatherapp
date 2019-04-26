@@ -11,21 +11,21 @@ namespace weatherapp.Repository
 
     }
 
-    public class SearchHistoryManager : ISearchHistoryRepository<WeatherModel>
+    public class SearchHistoryManager : ISearchHistoryRepository<SearchHistoryModel>
     {
-        ApplicationContext context;
-        public SearchHistoryManager(ApplicationContext _context)
+        readonly SearchHistoryContext context;
+        public SearchHistoryManager(SearchHistoryContext _context)
         {
             context = _context;
         }
-        public IEnumerable<WeatherModel> GetSearchHistoryAll()
+        public IEnumerable<SearchHistoryModel> GetSearchHistoryAll()
         {
-            return context.WeatherModels.ToList();
+            return context.SearchHistoryModels.ToList();
 
         }
-        public void Add(WeatherModel entity)
+        public void Add(SearchHistoryModel entity)
         {
-            context.WeatherModels.Add(entity);
+            context.SearchHistoryModels.Add(entity);
             context.SaveChanges();
         }
     }
