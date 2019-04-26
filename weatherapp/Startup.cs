@@ -25,8 +25,11 @@ namespace weatherapp
         {
 
             services.AddHttpClient<IGetWeather, GetWeather>();
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:SearchHistoryDB"]));
-            services.AddTransient<ISearchHistoryRepository<SearchHistoryModel>, SearchHistoryManager>();
+
+            services.AddDbContext<SearchHistoryContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:SearchHistoryDB"]));
+
+            services.AddScoped<ISearchHistoryRepository<SearchHistoryModel>, SearchHistoryManager>();
+
             services.AddSingleton<IWeatherService, WeatherService>();
 
             services.AddCors(options =>
@@ -56,9 +59,7 @@ namespace weatherapp
 
             app.UseCors(builder =>
             builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
-            app.UseCors(builder =>
-            builder.WithOrigins("http://192.168.0.102:8080").AllowAnyHeader());
-
+   
             app.UseHttpsRedirection();
 
             app.UseMvc(routes =>

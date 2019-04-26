@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20190423190717_weatherapp.Models.InputHistoryContext.Designer.cs" />
     <Compile Remove="Migrations\20190424181557_weatherapp.Models.ApplicationContext.cs" />
     <Compile Remove="Migrations\20190424181557_weatherapp.Models.ApplicationContext.Designer.cs" />
+    <Compile Remove="Migrations\20190425115554_weatherapp.Models.ApplicationContext.cs" />
+    <Compile Remove="Migrations\20190425115554_weatherapp.Models.ApplicationContext.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
