@@ -32,11 +32,15 @@ namespace weatherapp.Controllers
             {
                 return NotFound();
             }
-            _searchHistoryRepository.Add(new SearchHistoryModel
+            else
             {
-                CityName = cityName
-            });
-            return Ok(result);
+                _searchHistoryRepository.Add(new SearchHistoryModel
+                {
+                    CityName = cityName
+                });
+
+                return Ok(result);
+            }
         }
 
     }

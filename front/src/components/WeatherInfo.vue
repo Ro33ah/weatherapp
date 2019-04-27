@@ -10,12 +10,15 @@
 import Chart from "chart.js";
 import {Line} from "vue-chartjs";
 import {APIService} from '../APIService';
+import { error } from 'util';
 //const API_URL = 'https://localhost:5001';
 const apiService = new APIService();
 
 export default {
   name: 'Home',
+
   props: ['value'],
+
   data(){
     return{
       input: '',
@@ -23,7 +26,6 @@ export default {
 
     }
   },
-
 
   methods:{
     getWeather(event){
@@ -47,14 +49,12 @@ export default {
             {
               data: this.temps,
               label: "Av.Temp (F)",
-              //backgroundColor: ["rgba(54, 162, 235, 0.5)"],
               borderColor: ["rgb(54, 162, 235)"],
               borderWidth: 3,
             },
             {
               data: this.humidities,
               label: "Humidity (%)",
-              //backgroundColor: ["rgba(71, 183,132,0.5)"],
               borderColor: ["rgb(71, 183,132,.5)"],
               borderWidth: 3,
             }
@@ -84,6 +84,11 @@ export default {
         }
       })
       this.isCanvasNull = this.canvas === null? false : true;
+      }).catch(error => {
+        //console.log(error.response);
+         if (error.response.status === 404) {
+          this.$router.push({name: 'NotFound'})
+        }
       });
     
     } 
