@@ -58,8 +58,8 @@ namespace weatherapp
             }
 
             app.UseCors(builder =>
-            builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
-   
+            builder.WithOrigins("http://localhost:8080", "http://192.168.0.105:8080").AllowAnyHeader());
+           
             app.UseHttpsRedirection();
 
             app.UseMvc(routes =>

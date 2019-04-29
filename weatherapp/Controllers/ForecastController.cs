@@ -34,7 +34,7 @@ namespace weatherapp.Controllers
             }
             else
             {
-                _searchHistoryRepository.Add(new SearchHistoryModel
+                _searchHistoryRepository.UpdateHistory(new SearchHistoryModel
                 {
                     CityName = cityName
                 });

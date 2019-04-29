@@ -3,7 +3,7 @@
     <h1>City not found</h1>
     <img alt="Error logo" src="../assets/images.jpg" />
     <br>
-    <button >Back to safety</button>
+    <button @click="GoBack()" >Back to safety</button>
   </div>
 </template>
 
@@ -11,6 +11,11 @@
 
 export default{
   name: 'Home',
+  methods: {
+    GoBack(){
+      this.$router.push({name: "home"});
+    }
+  }
 }
 
 </script>

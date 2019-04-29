@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using weatherapp.Models;
 
@@ -7,7 +8,7 @@ namespace weatherapp.Repository
     public interface ISearchHistoryRepository<TEntity>
     {
         IEnumerable<TEntity> GetSearchHistoryAll();
-        void Add(TEntity entity);
+        void UpdateHistory(TEntity entity);
 
     }
 
@@ -23,10 +24,13 @@ namespace weatherapp.Repository
             return context.SearchHistoryModels.ToList();
 
         }
-        public void Add(SearchHistoryModel entity)
+        public void UpdateHistory(SearchHistoryModel entity)
         {
-            context.SearchHistoryModels.Add(entity);
-            context.SaveChanges();
+            if ((context.SearchHistoryModels.Where(x=>x.CityName == entity.CityName).Count()) == 0)
+            {
+                context.SearchHistoryModels.Add(entity);
+                context.SaveChanges();
+            }
         }
     }
 }
