@@ -10,6 +10,7 @@ namespace weatherapp.Controllers
 
     [Route("api/forecast/{cityName}")]
     [ApiController]
+
     public class ForecastController : ControllerBase
     {
         private readonly IWeatherService _weatherService;

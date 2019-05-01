@@ -1,9 +1,16 @@
 <template>
-  <p class="homeText">
-      <b-form-input id="inputBar" v-model="input" placeholder="Enter city name" @change="getWeather($event)"></b-form-input>
+  <div class="autocomplete">
+      <input v-model="searchString" placeholder="Enter city name" @click="GetHistory()"
+      @keydown.down="OnKeyDown" @keydown.up="OnKeyUp" @keydown.enter="OnKeyEnter">
+      <button @click="GetWeather(searchString)"> submit</button>
+      <ul class="autocomplete-results" v-show="isOpen">
+        <li class="autocomplete-result" :class="{ 'is-active': i === keyCounter }" v-for="(city, i) in cities" :key="i" @click="SelectHistory(city)"> {{city}}
+        </li>
+      </ul>
+          
       <br>
-      <canvas id="forecastChart" v-show="isCanvasNull"></canvas>
-  </p>
+    <canvas id="forecastChart" v-show="isCanvasNull"></canvas>
+  </div>
 </template>
 
 <script>
@@ -11,25 +18,63 @@ import Chart from "chart.js";
 import {Line} from "vue-chartjs";
 import {APIService} from '../APIService';
 import { error } from 'util';
+import { constants } from 'crypto';
+import { compileFunction } from 'vm';
 //const API_URL = 'https://localhost:5001';
 const apiService = new APIService();
 
 export default {
   name: 'Home',
-
-  props: ['value'],
-
   data(){
     return{
-      input: '',
-     isCanvasNull: null,
-
+      searchString: "",
+      cities: [],
+      isCanvasNull: null,
+      isOpen: false,
+      keyCounter: 0,
     }
   },
 
   methods:{
-    getWeather(event){
-      apiService.getWeather(event).then((data)=> {
+    GetHistory() {
+      this.isOpen = true;
+      apiService.GetHistory().then(data => {
+        this.cities = data.map(city => city.cityName);
+        console.log(this.cities);
+      })
+    },
+
+    SelectHistory(city){
+      this.searchString = city;
+      this.isOpen = false;
+    },
+
+    OnKeyUp(){
+      if (this.keyCounter  > 0){
+        this.keyCounter = this.keyCounter - 1;
+      }
+    },
+
+    OnKeyDown(){
+      if (this.keyCounter < this.cities.length){
+        this.keyCounter = this.keyCounter + 1;
+      }
+    },
+    OnKeyEnter(){
+      this.searchString = this.cities[this.keyCounter];
+      this.isOpen = false;
+      this.keyCounter = -1;
+    },
+
+    ClickOutEvent(event) {
+      if (!this.$el.contains(event.target)) {
+        this.isOpen = false;
+        this.arrowCounter = -1;
+      }
+    },
+
+    GetWeather(searchString){
+        apiService.GetWeather(searchString).then((data)=> {
         this.dates = data.list.map(list => {
           return list.newDate;
         });
@@ -39,6 +84,7 @@ export default {
         this.humidities = data.list.map( list => {
           return list.main.humidity;
         });
+       
         var ctx = document.getElementById("forecastChart").getContext('2d');
         this.chart = new Chart(ctx, {
         type: "line",
@@ -85,45 +131,52 @@ export default {
       })
       this.isCanvasNull = this.canvas === null? false : true;
       }).catch(error => {
-        //console.log(error.response);
          if (error.response.status === 404) {
           this.$router.push({name: 'NotFound'})
         }
       });
-    
-    } 
+    }
     },
     mounted() {
+      document.addEventListener('click', this.ClickOutEvent);
       //this.isCanvasNull = this.canvas === null? false : true;
-      //this.getWeather();
+      //this.GetWeather();
+    },
+    destroyed() {
+      document.removeEventListener('click', this.ClickOutEvent);
     }
 };
 </script>
 
 <style scoped>
 
-.homeText{
-    font-size: 35px;
-    color: black;
-    text-align: center;
+.autocomplete{
+    font-size: 15px;
     position: relative;
     top:30px;
-    text-shadow: 2px 2px 2px gray;
-}
-.header{
-  font-size: 25px;
-    color: black;
-    text-align: center;
-    position: relative;
-    text-shadow: 2px 2px 2px gray;
-}
-.col-sm-4{
-  display: inline-block;
 }
 #forecastChart{
   background: #212733;
   border-radius: 15px;
-  /* box-shadow: 0px 2px 15px rgba(25, 25, 25, 0.27); */
   margin:  25px 0;
 }
+  .autocomplete-results {
+    padding: 0;
+    margin: 10px;
+    border: 1px solid #eeeeee;
+    height: 120px;
+    overflow: auto;
+  }
+  
+  .autocomplete-result {
+    list-style: none;
+    text-align: left;
+    padding: 4px 2px;
+    cursor: pointer;
+  }
+  .autocomplete-result.is-active,
+  .autocomplete-result:hover {
+    background-color: #4AAE9B;
+    color: white;
+  }
 </style>
