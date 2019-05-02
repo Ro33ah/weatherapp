@@ -1,15 +1,17 @@
 <template>
   <div class="autocomplete">
-      <input v-model="searchString" placeholder="Enter city name" @click="GetHistory()"
+    <img alt="Weather Image" src="../assets/weather.png" />
+    <br>
+    <input class="inform-form" v-model="searchString" placeholder="Enter city name" @input="GetHistory()"
       @keydown.down="OnKeyDown" @keydown.up="OnKeyUp" @keydown.enter="OnKeyEnter">
-      <button @click="GetWeather(searchString)"> submit</button>
+      <button class="slay-button" @click="GetWeather(searchString)"> submit</button>
       <ul class="autocomplete-results" v-show="isOpen">
         <li class="autocomplete-result" :class="{ 'is-active': i === keyCounter }" v-for="(city, i) in cities" :key="i" @click="SelectHistory(city)"> {{city}}
         </li>
       </ul>
           
       <br>
-    <canvas id="forecastChart" v-show="isCanvasNull"></canvas>
+    <canvas class="forecast-chart" v-show="isCanvasNull"></canvas>
   </div>
 </template>
 
@@ -40,7 +42,6 @@ export default {
       this.isOpen = true;
       apiService.GetHistory().then(data => {
         this.cities = data.map(city => city.cityName);
-        console.log(this.cities);
       })
     },
 
@@ -85,7 +86,7 @@ export default {
           return list.main.humidity;
         });
        
-        var ctx = document.getElementById("forecastChart").getContext('2d');
+        var ctx = document.getElementsByClassName("forecast-chart").getContext('2d');
         this.chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -149,16 +150,27 @@ export default {
 </script>
 
 <style scoped>
+.inform-form{
+  width: 40%;
+  height: 30px;
+  margin: 20px;
+}
 
+.slay-button{
+  height: 30px;
+  width: 8%;
+  margin: 10px;
+  background-color:#4AAE9B;
+}
+.forecast-chart{
+  background: #212733;
+  border-radius: 15px;
+  margin:  25px 0;
+}
 .autocomplete{
     font-size: 15px;
     position: relative;
     top:30px;
-}
-#forecastChart{
-  background: #212733;
-  border-radius: 15px;
-  margin:  25px 0;
 }
   .autocomplete-results {
     padding: 0;
