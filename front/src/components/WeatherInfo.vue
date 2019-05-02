@@ -2,7 +2,7 @@
   <div class="autocomplete">
     <img alt="Weather Image" src="../assets/weather.png" />
     <br>
-    <input class="inform-form" v-model="searchString" placeholder="Enter city name" @input="GetHistory()"
+    <input class="input-form" v-model="searchString" placeholder="Enter city name" @input="GetHistory()"
       @keydown.down="OnKeyDown" @keydown.up="OnKeyUp" @keydown.enter="OnKeyEnter">
       <button class="slay-button" @click="GetWeather(searchString)"> submit</button>
       <ul class="autocomplete-results" v-show="isOpen">
@@ -11,7 +11,7 @@
       </ul>
           
       <br>
-    <canvas class="forecast-chart" v-show="isCanvasNull"></canvas>
+    <canvas id="forecast-chart" v-show="isCanvasNull"></canvas>
   </div>
 </template>
 
@@ -86,7 +86,7 @@ export default {
           return list.main.humidity;
         });
        
-        var ctx = document.getElementsByClassName("forecast-chart").getContext('2d');
+        var ctx = document.getElementById("forecast-chart").getContext('2d');
         this.chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -150,7 +150,7 @@ export default {
 </script>
 
 <style scoped>
-.inform-form{
+.input-form{
   width: 40%;
   height: 30px;
   margin: 20px;
@@ -162,7 +162,7 @@ export default {
   margin: 10px;
   background-color:#4AAE9B;
 }
-.forecast-chart{
+#forecast-chart{
   background: #212733;
   border-radius: 15px;
   margin:  25px 0;
