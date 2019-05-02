@@ -1,17 +1,21 @@
 <template>
-  <div class="autocomplete">
+  <div class="autocomplete" @click="ClickOutEvent">
     <img alt="Weather Image" src="../assets/weather.png" />
     <br>
     <input class="input-form" v-model="searchString" placeholder="Enter city name" @input="GetHistory()"
-      @keydown.down="OnKeyDown" @keydown.up="OnKeyUp" @keydown.enter="OnKeyEnter">
+      @keydown.down="OnKeyDown" @keydown.up="OnKeyUp" @keydown.enter="OnKeyEnter" >
       <button class="slay-button" @click="GetWeather(searchString)"> submit</button>
-      <ul class="autocomplete-results" v-show="isOpen">
-        <li class="autocomplete-result" :class="{ 'is-active': i === keyCounter }" v-for="(city, i) in cities" :key="i" @click="SelectHistory(city)"> {{city}}
+      <ul class="autocomplete-results" v-show="isOpen" >
+        <li class="autocomplete-result" 
+          :class="{ 'is-active': i === keyCounter }" 
+          v-for="(city, i) in cities" :key="i"
+          @click="SelectHistory(city)">
+          {{city}}
         </li>
       </ul>
           
       <br>
-    <canvas id="forecast-chart" v-show="isCanvasNull"></canvas>
+    <canvas ref="forecastChart" class="forecast-chart" v-show="chart != null"></canvas>
   </div>
 </template>
 
@@ -22,7 +26,8 @@ import {APIService} from '../APIService';
 import { error } from 'util';
 import { constants } from 'crypto';
 import { compileFunction } from 'vm';
-//const API_URL = 'https://localhost:5001';
+
+
 const apiService = new APIService();
 
 export default {
@@ -34,6 +39,7 @@ export default {
       isCanvasNull: null,
       isOpen: false,
       keyCounter: 0,
+      chart: null,
     }
   },
 
@@ -54,85 +60,90 @@ export default {
       if (this.keyCounter  > 0){
         this.keyCounter = this.keyCounter - 1;
       }
+      this.searchString = this.cities[this.keyCounter];
     },
 
     OnKeyDown(){
-      if (this.keyCounter < this.cities.length){
+      if (this.keyCounter < this.cities.length - 1){
         this.keyCounter = this.keyCounter + 1;
       }
+      this.searchString = this.cities[this.keyCounter];
     },
 
     OnKeyEnter(){
-      this.searchString = this.cities[this.keyCounter];
+      this.GetWeather(this.searchString);
       this.isOpen = false;
-      this.keyCounter = -1;
     },
 
     ClickOutEvent(event) {
-      if (!this.$el.contains(event.target)) {
-        this.isOpen = false;
-        this.arrowCounter = -1;
-      }
+      console.log('wadwadwad')
+      // if (!this.$el.contains(event.target)) {
+      //   this.isOpen = false;
+      //   this.arrowCounter = -1;
+      // }
     },
 
     GetWeather(searchString){
-        apiService.GetWeather(searchString).then((data)=> {
-        this.dates = data.list.map(list => {
-          return list.newDate;
-        });
-        this.temps = data.list.map( list => {
-          return list.main.temp;
-        });
-        this.humidities = data.list.map( list => {
-          return list.main.humidity;
-        });
-       
-        var ctx = document.getElementById("forecast-chart").getContext('2d');
-        this.chart = new Chart(ctx, {
-        type: "line",
-        data: {
-          isCanvasNull: '',
-          labels: this.dates,
-          datasets: [
-            {
-              data: this.temps,
-              label: "Av.Temp (F)",
-              borderColor: ["rgb(54, 162, 235)"],
-              borderWidth: 3,
-            },
-            {
-              data: this.humidities,
-              label: "Humidity (%)",
-              borderColor: ["rgb(71, 183,132,.5)"],
-              borderWidth: 3,
-            }
-          ]
-        },
-        options: {
-          lineTension: 6,
-          responsive: true,
-          title: {
-            display: true,
-            fontSize: 30,
-            fontColor: '#FA8072',
-            text: "5-day Temperature & Humidity"
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }],
-            xAxes: [{
-              ticks:{
-                beginAtZero: true
-              }
-            }]
-          }
-        }
-      })
-      this.isCanvasNull = this.canvas === null? false : true;
+        apiService.GetWeather(searchString)
+          .then(response=> {
+            this.dates = response.list.map(list => list.newDate);
+            this.temps = response.list.map( list => list.main.temp);
+            this.humidities = response.list.map( list => list.main.humidity);
 
+            let data = {
+                isCanvasNull: '',
+                labels: this.dates,
+                datasets: [
+                  {
+                    data: this.temps,
+                    label: "Av.Temp (F)",
+                    borderColor: ["rgb(54, 162, 235)"],
+                    borderWidth: 3,
+                  },
+                  {
+                    data: this.humidities,
+                    label: "Humidity (%)",
+                    borderColor: ["rgb(71, 183,132,.5)"],
+                    borderWidth: 3,
+                  }
+                ]
+              };
+          
+            if(this.chart) {
+              this.chart.data = data;
+              this.chart.update();
+            } else {
+              
+              let chartConfig = {
+                type: "line",
+                data: data,
+                options: {
+                  lineTension: 6,
+                  responsive: true,
+                  title: {
+                    display: true,
+                    fontSize: 30,
+                    fontColor: '#FA8072',
+                    text: "5-day Temperature & Humidity"
+                  },
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }],
+                    xAxes: [{
+                      ticks:{
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              };
+
+              let ctx = this.$refs.forecastChart.getContext('2d');
+              this.chart = new Chart(ctx, chartConfig)
+            }
       }).catch(error => {
          if (error.response.status === 404) {
           this.$router.push({name: 'NotFound'})
@@ -140,42 +151,43 @@ export default {
       });
     }
     },
-
-    mounted() {
-      document.addEventListener('click', this.ClickOutEvent);
-      //this.isCanvasNull = this.canvas === null? false : true;
-      //this.GetWeather();
-    },
-    
-    destroyed() {
-      document.removeEventListener('click', this.ClickOutEvent);
-    }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+$baseColor: #2e3b57;
+$height: 30px;
+
 .input-form{
   width: 40%;
-  height: 30px;
+  height: $height;
   margin: 20px;
 }
 
-.slay-button{
-  height: 30px;
+.slay-button {
+  height: $height;
   width: 8%;
   margin: 10px;
   background-color:#4AAE9B;
 }
-#forecast-chart{
-  background: #212733;
+.forecast-chart {
+  background: $baseColor;
   border-radius: 15px;
-  margin:  25px 0;
+  margin:  ($height - 5px) 0;
+
+  &:hover {
+    background: rgb(196, 136, 25);
+  }
 }
-.autocomplete{
+
+
+.autocomplete {
     font-size: 15px;
     position: relative;
     top:30px;
-}
+
+    
   .autocomplete-results {
     padding: 0;
     margin: 10px;
@@ -189,10 +201,11 @@ export default {
     text-align: left;
     padding: 4px 2px;
     cursor: pointer;
+
+    &.is-active, &:hover {
+      background-color: #4AAE9B;
+      color: white;
+    }
   }
-  .autocomplete-result.is-active,
-  .autocomplete-result:hover {
-    background-color: #4AAE9B;
-    color: white;
-  }
+}
 </style>

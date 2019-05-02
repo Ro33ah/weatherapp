@@ -41,6 +41,12 @@ namespace weatherapp
                 });
             });
 
+            services.AddSpaStaticFiles(configuration =>
+                {
+                    // In production, the Vue.js files will be served from this directory
+                    configuration.RootPath = "app/dist";
+                });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -57,6 +63,9 @@ namespace weatherapp
                 app.UseHsts();
             }
 
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
             app.UseCors(builder =>
             builder.WithOrigins("http://localhost:8080", "http://192.168.0.105:8080").AllowAnyHeader());
            
@@ -67,6 +76,18 @@ namespace weatherapp
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "app";
+
+                // only for local development against localhost:5000
+                if (env.IsDevelopment())
+                {
+                    // see https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/react?view=aspnetcore-2.1&tabs=visual-studio#run-the-cra-server-independently
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+                }
             });
         }
     }
