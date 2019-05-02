@@ -32,5 +32,9 @@ namespace weatherapp.Repository
                 context.SaveChanges();
             }
         }
+        public class HistorySetting
+        {
+            public int HistoryLength { get; set; }
+        }
     }
 }
