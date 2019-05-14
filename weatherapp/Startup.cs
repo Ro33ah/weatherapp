@@ -47,6 +47,8 @@ namespace weatherapp
                     configuration.RootPath = "app/dist";
                 });
 
+            services.Configure<HistorySetting>(Configuration.GetSection(nameof(HistorySetting)));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -67,7 +69,7 @@ namespace weatherapp
             app.UseSpaStaticFiles();
 
             app.UseCors(builder =>
-            builder.WithOrigins("http://localhost:8080", "http://192.168.0.105:8080").AllowAnyHeader());
+            builder.WithOrigins("http://localhost:8080", "http://10.0.75.1:8080/").AllowAnyHeader());
            
             app.UseHttpsRedirection();
 

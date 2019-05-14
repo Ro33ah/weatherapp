@@ -1,5 +1,5 @@
 <template>
-  <div class="autocomplete" @click="ClickOutEvent">
+  <div class="autocomplete" @click="ClickOutEvent()">
     <img alt="Weather Image" src="../assets/weather.png" />
     <br>
     <input class="input-form" v-model="searchString" placeholder="Enter city name" @input="GetHistory()"
@@ -40,6 +40,9 @@ export default {
       isOpen: false,
       keyCounter: 0,
       chart: null,
+      dates: null,
+      temps: null,
+      humidities: null,
     }
   },
 
@@ -75,13 +78,10 @@ export default {
       this.isOpen = false;
     },
 
-    ClickOutEvent(event) {
-      console.log('wadwadwad')
-      // if (!this.$el.contains(event.target)) {
-      //   this.isOpen = false;
-      //   this.arrowCounter = -1;
-      // }
-    },
+     ClickOutEvent(event) {
+         this.isOpen = false;
+         this.keyCounter = 0;
+     },
 
     GetWeather(searchString){
         apiService.GetWeather(searchString)

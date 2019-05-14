@@ -11,6 +11,7 @@ namespace weatherapp.Controllers
     public class SearchHistoryController : Controller
     {
         private readonly ISearchHistoryRepository<SearchHistoryModel> _searchHistory;
+
         public SearchHistoryController(ISearchHistoryRepository<SearchHistoryModel> searchHistory)
         {
             _searchHistory = searchHistory;
